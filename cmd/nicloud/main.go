@@ -11,11 +11,11 @@ import (
 )
 
 var (
-	company    = flag.String("d", "", "The company to brute force")
-	debugmode  = flag.Bool("b", false, "Enable debug mode")
+	company = flag.String("d", "", "Company name for brute force")
+	// debugmode  = flag.Bool("b", false, "Debug mode")
 	silentmode = flag.Bool("s", false, "Enable silent mode")
-	threads    = flag.Int("t", 100, "Number of threads")
-	wordlis    = flag.String("w", "~/.nipe/cloud.txt", "Path of wordlist")
+	threads    = flag.Int("t", 100, "Number of concurrent threads")
+	wordlis    = flag.String("w", "~/.nipe/cloud.txt", "Path to the wordlist")
 
 	test_aws = flag.Bool("aws", false, "Brute Force on Amazon Web Services")
 	test_dos = flag.Bool("dos", false, "Brute Force on DigitalOcean Space")
@@ -24,9 +24,11 @@ var (
 
 func main() {
 	flag.Parse()
-	if *debugmode {
-		log.DefaultLogger.SetMaxLevel(levels.LevelDebug)
-	}
+	/*
+		if *debugmode {
+			log.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+		}
+	*/
 	if *silentmode {
 		log.DefaultLogger.SetMaxLevel(levels.LevelSilent)
 	} else {
