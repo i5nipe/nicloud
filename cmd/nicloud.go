@@ -1,4 +1,4 @@
-package main
+package cmd
 
 import (
 	"flag"
@@ -22,7 +22,7 @@ var (
 	test_gcs = flag.Bool("gcs", false, "Brute Force on Google Cloud Storage")
 )
 
-func main() {
+func Execute() {
 	flag.Parse()
 	/*
 		if *debugmode {
