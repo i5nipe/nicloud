@@ -15,7 +15,7 @@
 ```
 
 ```bash
-go get github.com/i5nipe/nicloud
+go install github.com/i5nipe/nicloud@latest
 ```
 
 
