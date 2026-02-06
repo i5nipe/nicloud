@@ -12,7 +12,7 @@ import (
 
 var (
 	company = flag.String("d", "", "Company name for brute force")
-	// debugmode  = flag.Bool("b", false, "Debug mode")
+	debugmode  = flag.Bool("b", false, "Debug mode")
 	silentmode = flag.Bool("s", false, "Enable silent mode")
 	threads    = flag.Int("t", 100, "Number of concurrent threads")
 	wordlis    = flag.String("w", "~/.nipe/cloud.txt", "Path to the wordlist")
@@ -25,11 +25,11 @@ var (
 
 func Execute() {
 	flag.Parse()
-	/*
-		if *debugmode {
-			log.DefaultLogger.SetMaxLevel(levels.LevelDebug)
-		}
-	*/
+	
+	if *debugmode {
+		log.DefaultLogger.SetMaxLevel(levels.LevelDebug)
+	}
+
 	if *silentmode {
 		log.DefaultLogger.SetMaxLevel(levels.LevelSilent)
 	} else {

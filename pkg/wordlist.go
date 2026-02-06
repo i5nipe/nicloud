@@ -18,7 +18,7 @@ func gerarLista(file, company, mode string) ([]string, error) {
 	scanner := bufio.NewScanner(wordlist)
 
 	separ := []string{".", "-", "_", ""}
-	if mode == "gct" {
+	if mode == "gct" || mode == "fire" {
 		separ = []string{"-", "_", ""}
 
 	} else {

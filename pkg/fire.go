@@ -19,7 +19,7 @@ func BruteFire(company, filename string, threads int){
 	log.Info().Msgf("%d Generated URLs for %s (FIRE)", len(urls)*5, Magenta("RealTime Database Firebase").Bold())
 	results := make(chan Results, threads)
 	domain := make(chan string, threads)
-	regions := []string{"-default-rtb"}
+	regions := []string{"-default-rtdb"}
 
 	for w := 1; w < threads; w++ {
 		go getAWS(domain, results, client)
@@ -28,7 +28,7 @@ func BruteFire(company, filename string, threads int){
 	go func() {
 		for _, aaa := range urls {
 			for _, region := range regions {
-				domain <- fmt.Sprintf("https://%s.%s%s/users.json", aaa, region, baseUrlFIRE)
+				domain <- fmt.Sprintf("https://%s%s%s/users.json", aaa, region, baseUrlFIRE)
 			}
 		}
 	}()
