@@ -20,6 +20,7 @@ var (
 	test_aws = flag.Bool("aws", false, "Brute Force on Amazon Web Services")
 	test_dos = flag.Bool("dos", false, "Brute Force on DigitalOcean Space")
 	test_gcs = flag.Bool("gcs", false, "Brute Force on Google Cloud Storage")
+	test_fire = flag.Bool("fire", false, "Brute Force on Real Time Database from Firebase")
 )
 
 func Execute() {
@@ -48,10 +49,11 @@ func Execute() {
 	}
 
 	// No arguments
-	if !*test_aws && !*test_gcs && !*test_dos {
+	if !*test_aws && !*test_gcs && !*test_dos && !*test_fire{
 		nicloud.BruteAWS(*company, *wordlis, *threads)
 		nicloud.BruteGcs(*wordlis, *company, *threads)
 		nicloud.BruteDOS(*company, *wordlis, *threads)
+		nicloud.BruteFire(*company, *wordlis, *threads)
 	}
 
 	if *test_aws {
@@ -63,5 +65,7 @@ func Execute() {
 	if *test_dos {
 		nicloud.BruteDOS(*company, *wordlis, *threads)
 	}
-
+	if *test_fire {
+		nicloud.BruteFire(*company, *wordlis, *threads)
+	}
 }
