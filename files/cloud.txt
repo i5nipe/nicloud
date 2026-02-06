@@ -166,7 +166,6 @@ archive
 archive1
 archive01
 archive-old
-com.companyname
 001
 002
 003
@@ -2515,5 +2514,3 @@ cfn
 gwt
 feeds
 taipei
-com.br
-appspot.com
