@@ -23,7 +23,7 @@ func BruteDOS(company, filename string, threads int) {
 	regions := []string{"nyc3", "ams3", "sgp1", "sfo2", "fra1"}
 
 	for w := 1; w < threads; w++ {
-		go getAWS(domain, results, client)
+		go getAWS(domain, results, client, "dos")
 	}
 
 	go func() {

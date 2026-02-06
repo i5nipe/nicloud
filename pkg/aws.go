@@ -18,8 +18,9 @@ const (
 var client = fasthttp.Client{TLSConfig: &tls.Config{InsecureSkipVerify: true}}
 
 type Results struct {
-	Url        string
-	StatusCode int
+	Url              string
+	StatusCode       int
+	IsPermissionDenied bool
 }
 
 func BruteAWS(company, filename string, threads int) {
@@ -33,7 +34,7 @@ func BruteAWS(company, filename string, threads int) {
 	domain := make(chan string, threads)
 
 	for w := 1; w < threads; w++ {
-		go getAWS(domain, results, client)
+		go getAWS(domain, results, client, "aws")
 	}
 
 	go func() {
@@ -75,7 +76,7 @@ func test_aws_list(resp Results) {
 	fmt.Println(string(out))
 }
 
-func getAWS(url chan string, results chan Results, client fasthttp.Client) {
+func getAWS(url chan string, results chan Results, client fasthttp.Client, requestType string) {
 	for j := range url {
 		log.Debug().Str("URL", j).Msg("Making GET")
 		req := fasthttp.AcquireRequest()
@@ -85,10 +86,16 @@ func getAWS(url chan string, results chan Results, client fasthttp.Client) {
 
 		if err := client.Do(req, resp); err != nil {
 			log.Debug().Msg(fmt.Sprintf("Error in get of %s\n", j))
-			results <- Results{j, 0}
+			results <- Results{j, 0, false}
 			continue
 		}
-		results <- Results{j, resp.StatusCode()}
+		permissionDenied := false
+		if requestType == "fire" && resp.StatusCode() == 403 {
+			if string(resp.Body()) == "{\n  \"error\" : \"Permission denied\"\n}" {
+				permissionDenied = true
+			}
+		}
+		results <- Results{j, resp.StatusCode(), permissionDenied}
 
 		fasthttp.ReleaseRequest(req)
 		fasthttp.ReleaseResponse(resp)

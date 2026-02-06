@@ -23,7 +23,7 @@ func BruteGcs(file, company string, threads int) {
 	resu := make(chan Results, threads)
 
 	for c := 0; c < threads; c++ {
-		go getAWS(urls, resu, client)
+		go getAWS(urls, resu, client, "gcs")
 	}
 
 	go func() {
